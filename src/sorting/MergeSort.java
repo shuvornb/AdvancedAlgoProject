@@ -1,14 +1,16 @@
 package sorting;
 
+import java.io.IOException;
+
 public class MergeSort {
-    void merge(int[] array, int l, int m, int r) {
+    void merge(long[] array, int l, int m, int r) {
         // Find sizes of two subarrays to be merged
         int n1 = m - l + 1;
         int n2 = r - m;
 
         // Create temp arrays
-        int[] leftSubArray = new int[n1];
-        int[] rightSubArray = new int[n2];
+        long[] leftSubArray = new long[n1];
+        long[] rightSubArray = new long[n2];
 
         // Copy data to temporary arrays
         for (int i = 0; i < n1; ++i)
@@ -52,7 +54,7 @@ public class MergeSort {
 
     // Main function that sorts arr[l..r] using
     // merge()
-    void sort(int[] array, int l, int r) {
+    public void sort(long[] array, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
 
@@ -72,10 +74,8 @@ public class MergeSort {
     }
 
     // Driver code
-    public static void main(String[] args) {
-        int[] arr = { 12, 11, 13, 5, 6, 7 };
-        MergeSort ob = new MergeSort();
-        ob.sort(arr, 0, arr.length - 1);
-        printArray(arr);
+    public static void main(String[] args) throws IOException {
+        String fileName = args[0];
+        Util.generateOutput(fileName, "MergeSort");
     }
 }

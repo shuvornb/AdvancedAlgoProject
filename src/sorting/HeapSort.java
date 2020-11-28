@@ -1,7 +1,9 @@
 package sorting;
 
+import java.io.IOException;
+
 public class HeapSort {
-    public void sort(int[] array) {
+    public void sort(long[] array) {
         int n = array.length;
 
         // Build heap (rearrange array)
@@ -11,7 +13,7 @@ public class HeapSort {
         // One by one extract an element from heap
         for (int i = n - 1; i > 0; i--) {
             // Move current root to end
-            int temp = array[0];
+            long temp = array[0];
             array[0] = array[i];
             array[i] = temp;
 
@@ -21,7 +23,7 @@ public class HeapSort {
     }
 
     // To heapify a subtree rooted with node i which is
-    void heapify(int[] array, int n, int i) {
+    void heapify(long[] array, int n, int i) {
         int largest = i;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
@@ -36,7 +38,7 @@ public class HeapSort {
 
         // If largest is not root
         if (largest != i) {
-            int swap = array[i];
+            long swap = array[i];
             array[i] = array[largest];
             array[largest] = swap;
 
@@ -46,16 +48,14 @@ public class HeapSort {
     }
 
     // A utility function to print array of size n
-    public static void printArray(int[] arr) {
-        for (int j : arr) System.out.print(j + " ");
+    public static void printArray(long[] arr) {
+        for (long j : arr) System.out.print(j + " ");
         System.out.println();
     }
 
     // Driver code
-    public static void main(String[] args) {
-        int[] array = { 12, 11, 13, 5, 6, 7 };
-        HeapSort ob = new HeapSort();
-        ob.sort(array);
-        printArray(array);
+    public static void main(String[] args) throws IOException {
+        String fileName = args[0];
+        Util.generateOutput(fileName, "HeapSort");
     }
 }

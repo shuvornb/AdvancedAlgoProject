@@ -1,10 +1,12 @@
 package sorting;
 
+import java.io.*;
+
 public class InsertionSort {
-    public void sort(int[] array) {
+    public void sort(long[] array) {
         int n = array.length;
         for (int i=1; i<n; ++i) {
-            int key = array[i];
+            long key = array[i];
             int j = i-1;
             while (j>=0 && array[j] > key)
             {
@@ -15,16 +17,9 @@ public class InsertionSort {
         }
     }
 
-    public static void printArray(int[] arr) {
-        for (int j : arr) System.out.print(j + " ");
-        System.out.println();
-    }
-
-    public static void main(String[] args) {
-        int[] array = {12, 11, 13, 5, 6};
-        InsertionSort ob = new InsertionSort();
-        ob.sort(array);
-
-        printArray(array);
+    // Driver code
+    public static void main(String[] args) throws IOException {
+        String fileName = args[0];
+        Util.generateOutput(fileName, "InsertionSort");
     }
 }
