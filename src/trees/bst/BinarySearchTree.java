@@ -1,7 +1,7 @@
 package trees.bst;
 
 public class BinarySearchTree {
-    TreeNode root;
+    BSTNode root;
 
     BinarySearchTree() {
         root = null;
@@ -13,11 +13,11 @@ public class BinarySearchTree {
     }
 
     // A recursive function to insert a new key in BST
-    TreeNode insertIntoBST(TreeNode root, int key) {
+    BSTNode insertIntoBST(BSTNode root, int key) {
 
         // If the tree is empty, return a new node
         if (root == null) {
-            root = new TreeNode(key);
+            root = new BSTNode(key);
             return root;
         }
 
@@ -36,7 +36,7 @@ public class BinarySearchTree {
     }
 
     // A utility function to do inorder traversal of BST
-    void inorderTraversal(TreeNode node) {
+    void inorderTraversal(BSTNode node) {
         if(node.left != null) inorderTraversal(node.left);
         System.out.print(node.key + " ");
         if(node.right != null) inorderTraversal(node.right);
@@ -48,7 +48,7 @@ public class BinarySearchTree {
     }
 
     // A utility function to do preorder traversal of BST
-    void preorderTraversal(TreeNode node) {
+    void preorderTraversal(BSTNode node) {
         System.out.print(node.key + " ");
         if(node.left != null) preorderTraversal(node.left);
         if(node.right != null) preorderTraversal(node.right);
@@ -60,7 +60,7 @@ public class BinarySearchTree {
     }
 
     // A utility function to do postorder traversal of BST
-    void postorderTraversal(TreeNode node) {
+    void postorderTraversal(BSTNode node) {
         if(node.left != null) postorderTraversal(node.left);
         if(node.right != null) postorderTraversal(node.right);
         System.out.print(node.key + " ");
@@ -72,7 +72,7 @@ public class BinarySearchTree {
     }
 
     // A recursive utility function to get the height of BST
-    int getHeightOfBST(TreeNode node) {
+    int getHeightOfBST(BSTNode node) {
         if(node == null) return 0;
         return Math.max(1 + getHeightOfBST(node.left), 1 + getHeightOfBST(node.right));
     }

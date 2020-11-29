@@ -1,11 +1,11 @@
 package trees.bst;
 
-public class TreeNode {
+public class BSTNode {
     int key;
-    TreeNode left;
-    TreeNode right;
+    BSTNode left;
+    BSTNode right;
 
-    public TreeNode(int item) {
+    public BSTNode(int item) {
         key = item;
         left = null;
         right = null;

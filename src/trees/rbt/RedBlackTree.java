@@ -1,38 +1,187 @@
 package trees.rbt;
 
 public class RedBlackTree {
-    private TreeNode root;
+    private RBTNode root;
+    private RBTNode TNULL;
 
-    // Constructor
-    RedBlackTree() {
-        root = null;
+    public RedBlackTree() {
+        TNULL = new RBTNode();
+        TNULL.color = 0;
+        TNULL.left = null;
+        TNULL.right = null;
+        root = TNULL;
     }
 
-    // This method mainly calls insertIntoTreeUsingBSTProperty()
-    void insert(int key) {
-        TreeNode node = new TreeNode(key);
-        root = insertIntoTreeUsingBSTProperty(root, node);
-        fixViolations(node);
+    // insert the key to the tree in its appropriate position and fix the tree
+    public void insert(int key) {
+        // Ordinary Binary Search Insertion
+        RBTNode node = new RBTNode();
+        node.parent = null;
+        node.key = key;
+        node.left = TNULL;
+        node.right = TNULL;
+        node.color = 1; // new node must be red
+
+        RBTNode y = null;
+        RBTNode x = this.root;
+
+        while (x != TNULL) {
+            y = x;
+            if (node.key < x.key) {
+                x = x.left;
+            } else {
+                x = x.right;
+            }
+        }
+
+        // y is parent of x
+        node.parent = y;
+        if (y == null) {
+            root = node;
+        } else if (node.key < y.key) {
+            y.left = node;
+        } else {
+            y.right = node;
+        }
+
+        // if new node is a root node, simply return
+        if (node.parent == null){
+            node.color = 0;
+            return;
+        }
+
+        // if the grandparent is null, simply return
+        if (node.parent.parent == null) {
+            return;
+        }
+
+        // Fix the tree
+        fixInsert(node);
     }
 
-    private void fixViolations(TreeNode node) {
+    // fix the red-black tree
+    private void fixInsert(RBTNode k){
+        RBTNode u;
+        while (k.parent.color == 1) {
+            if (k.parent == k.parent.parent.right) {
+                u = k.parent.parent.left; // uncle
+                if (u.color == 1) {
+                    // case 3.1
+                    u.color = 0;
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    k = k.parent.parent;
+                } else {
+                    if (k == k.parent.left) {
+                        // case 3.2.2
+                        k = k.parent;
+                        rightRotate(k);
+                    }
+                    // case 3.2.1
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    leftRotate(k.parent.parent);
+                }
+            } else {
+                u = k.parent.parent.right; // uncle
+
+                if (u.color == 1) {
+                    // mirror case 3.1
+                    u.color = 0;
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    k = k.parent.parent;
+                } else {
+                    if (k == k.parent.right) {
+                        // mirror case 3.2.2
+                        k = k.parent;
+                        leftRotate(k);
+                    }
+                    // mirror case 3.2.1
+                    k.parent.color = 0;
+                    k.parent.parent.color = 1;
+                    rightRotate(k.parent.parent);
+                }
+            }
+            if (k == root) {
+                break;
+            }
+        }
+        root.color = 0;
     }
 
-    // A recursive function to insert a new key in tree
-    TreeNode insertIntoTreeUsingBSTProperty(TreeNode root, TreeNode node) {
+    // rotate left at node x
+    public void leftRotate(RBTNode x) {
+        RBTNode y = x.right;
+        x.right = y.left;
+        if (y.left != TNULL) {
+            y.left.parent = x;
+        }
+        y.parent = x.parent;
+        if (x.parent == null) {
+            this.root = y;
+        } else if (x == x.parent.left) {
+            x.parent.left = y;
+        } else {
+            x.parent.right = y;
+        }
+        y.left = x;
+        x.parent = y;
+    }
 
-        if (root == null) {
-            return node;
+    // rotate right at node x
+    public void rightRotate(RBTNode x) {
+        RBTNode y = x.left;
+        x.left = y.right;
+        if (y.right != TNULL) {
+            y.right.parent = x;
         }
+        y.parent = x.parent;
+        if (x.parent == null) {
+            this.root = y;
+        } else if (x == x.parent.right) {
+            x.parent.right = y;
+        } else {
+            x.parent.left = y;
+        }
+        y.right = x;
+        x.parent = y;
+    }
 
-        if (node.key < root.key){
-            root.left = insertIntoTreeUsingBSTProperty(root.left, node);
-            root.left.parent = root;
+    private void printHelper(RBTNode root, String indent, boolean last) {
+        // print the tree structure on the screen
+        if (root != TNULL) {
+            System.out.print(indent);
+            if (last) {
+                System.out.print("R----");
+                indent += "     ";
+            } else {
+                System.out.print("L----");
+                indent += "|    ";
+            }
+
+            String sColor = root.color == 1?"RED":"BLACK";
+            System.out.println(root.key + "(" + sColor + ")");
+            printHelper(root.left, indent, false);
+            printHelper(root.right, indent, true);
         }
-        else if (node.key > root.key) {
-            root.right = insertIntoTreeUsingBSTProperty(root.right, node);
-            root.right.parent = root;
-        }
-        return root;
+    }
+
+    public void prettyPrint() {
+        printHelper(this.root, "", true);
+    }
+
+    public static void main(String[] args) {
+        RedBlackTree bst = new RedBlackTree();
+        bst.insert(8);
+        bst.insert(18);
+        bst.insert(5);
+        bst.insert(15);
+        bst.insert(17);
+        bst.insert(25);
+        bst.insert(40);
+        bst.insert(80);
+
+        bst.prettyPrint();
     }
 }
