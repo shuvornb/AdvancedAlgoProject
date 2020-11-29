@@ -1,21 +1,19 @@
 package trees.bst;
 
 public class BinarySearchTree {
-    // Root of BST
     TreeNode root;
 
-    // Constructor
     BinarySearchTree() {
         root = null;
     }
 
-    // This method mainly calls insertRec()
+    // This method mainly calls insertIntoBST()
     void insert(int key) {
-        root = insertRec(root, key);
+        root = insertIntoBST(root, key);
     }
 
     // A recursive function to insert a new key in BST
-    TreeNode insertRec(TreeNode root, int key) {
+    TreeNode insertIntoBST(TreeNode root, int key) {
 
         // If the tree is empty, return a new node
         if (root == null) {
@@ -23,56 +21,60 @@ public class BinarySearchTree {
             return root;
         }
 
-        // Otherwise, recur down the tree
+        // Otherwise, find out the appropriate position recursively
         if (key < root.key)
-            root.left = insertRec(root.left, key);
+            root.left = insertIntoBST(root.left, key);
         else if (key > root.key)
-            root.right = insertRec(root.right, key);
+            root.right = insertIntoBST(root.right, key);
 
-        // return the (unchanged) node pointer
         return root;
     }
 
-    // This method mainly calls inorderRec()
+    // This method mainly calls inorderTraversal()
     void inorder() {
-        inorderRec(root);
+        inorderTraversal(root);
     }
 
     // A utility function to do inorder traversal of BST
-    void inorderRec(TreeNode root) {
-        if (root != null) {
-            inorderRec(root.left);
-            System.out.println(root.key);
-            inorderRec(root.right);
-        }
+    void inorderTraversal(TreeNode node) {
+        if(node.left != null) inorderTraversal(node.left);
+        System.out.print(node.key + " ");
+        if(node.right != null) inorderTraversal(node.right);
     }
 
-    // This method mainly calls preorderRec()
+    // This method mainly calls preorderTraversal()
     void preorder() {
-        preorderRec(root);
+        preorderTraversal(root);
     }
 
     // A utility function to do preorder traversal of BST
-    void preorderRec(TreeNode root) {
-        if (root != null) {
-            System.out.println(root.key);
-            preorderRec(root.left);
-            preorderRec(root.right);
-        }
+    void preorderTraversal(TreeNode node) {
+        System.out.print(node.key + " ");
+        if(node.left != null) preorderTraversal(node.left);
+        if(node.right != null) preorderTraversal(node.right);
     }
 
-    // This method mainly calls postorderRec()
+    // This method mainly calls postorderTraversal()
     void postorder() {
-        postorderRec(root);
+        postorderTraversal(root);
     }
 
     // A utility function to do postorder traversal of BST
-    void postorderRec(TreeNode root) {
-        if (root != null) {
-            postorderRec(root.left);
-            postorderRec(root.right);
-            System.out.println(root.key);
-        }
+    void postorderTraversal(TreeNode node) {
+        if(node.left != null) postorderTraversal(node.left);
+        if(node.right != null) postorderTraversal(node.right);
+        System.out.print(node.key + " ");
+    }
+
+    // This method mainly calls getHeightOfBST()
+    int height(){
+        return getHeightOfBST(root);
+    }
+
+    // A recursive utility function to get the height of BST
+    int getHeightOfBST(TreeNode node) {
+        if(node == null) return 0;
+        return Math.max(1 + getHeightOfBST(node.left), 1 + getHeightOfBST(node.right));
     }
 
     // Driver Code
@@ -85,6 +87,7 @@ public class BinarySearchTree {
           30      70
          /  \    /  \
        20   40  60   80 */
+
         tree.insert(50);
         tree.insert(30);
         tree.insert(20);
@@ -95,11 +98,17 @@ public class BinarySearchTree {
 
         // print inorder traversal of the BST
         tree.inorder();
+        System.out.println("\n");
 
         // print preorder traversal of the BST
         tree.preorder();
+        System.out.println("\n");
 
         // print postorder traversal of the BST
         tree.postorder();
+        System.out.println("\n");
+
+        // print height of the tree
+        System.out.println(tree.height());
     }
 }

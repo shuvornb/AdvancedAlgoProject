@@ -7,6 +7,7 @@ public class TreeNode {
 
     public TreeNode(int item) {
         key = item;
-        left = right = null;
+        left = null;
+        right = null;
     }
 }
