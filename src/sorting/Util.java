@@ -1,7 +1,8 @@
 package sorting;
 
 import java.io.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
     public static void generateOutput(String fileName, String sortingAlgo) throws IOException {
@@ -22,6 +23,7 @@ public class Util {
         int counter = 1;
         long intervalSum = 0;
         long processStartTime = System.currentTimeMillis();
+        List<Double> intervalList = new ArrayList<>();
 
         while ((st = reader.readLine()) != null) {
             String[] parts = st.split(" ");
@@ -45,18 +47,38 @@ public class Util {
 
             counter ++;
             intervalSum += interval;
+            intervalList.add((double) interval);
         }
 
         double avgTime = (double) intervalSum / (counter-1);
         String avgTimeStr = "\nAverage Time: " + avgTime;
         writer.write(avgTimeStr);
 
+        String sdStr = "\nStandard Deviation: " + String.format("%.2f", calculateSD(intervalList));
+        writer.write(sdStr);
+
         long processEndTime = System.currentTimeMillis();
         long totalTime = processEndTime - processStartTime;
         String totalTimeStr = "\nTotal Time: " + totalTime;
         writer.write(totalTimeStr);
-
         writer.close();
+    }
+
+    public static double calculateSD(List<Double> numArray) {
+        double sum = 0.0, standardDeviation = 0.0;
+        int length = numArray.size();
+
+        for(double num : numArray) {
+            sum += num;
+        }
+
+        double mean = sum/length;
+
+        for(double num: numArray) {
+            standardDeviation += Math.pow(num - mean, 2);
+        }
+
+        return Math.sqrt(standardDeviation/length);
     }
 
     public static void printArray(int[] arr) {
