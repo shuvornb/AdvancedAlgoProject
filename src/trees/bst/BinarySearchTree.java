@@ -1,14 +1,16 @@
 package trees.bst;
 
+import trees.rbt.RBTNode;
+
 public class BinarySearchTree {
     BSTNode root;
 
-    BinarySearchTree() {
+    public BinarySearchTree() {
         root = null;
     }
 
     // This method mainly calls insertIntoBST()
-    void insert(int key) {
+    public void insert(int key) {
         root = insertIntoBST(root, key);
     }
 
@@ -67,7 +69,7 @@ public class BinarySearchTree {
     }
 
     // This method mainly calls getHeightOfBST()
-    int height(){
+    public int height(){
         return getHeightOfBST(root);
     }
 
@@ -75,6 +77,28 @@ public class BinarySearchTree {
     int getHeightOfBST(BSTNode node) {
         if(node == null) return 0;
         return Math.max(1 + getHeightOfBST(node.left), 1 + getHeightOfBST(node.right));
+    }
+
+    private void printHelper(BSTNode root, String indent, boolean last) {
+        // print the tree structure on the screen
+        if (root != null) {
+            System.out.print(indent);
+            if (last) {
+                System.out.print("R----");
+                indent += "     ";
+            } else {
+                System.out.print("L----");
+                indent += "|    ";
+            }
+
+            System.out.println(root.key);
+            printHelper(root.left, indent, false);
+            printHelper(root.right, indent, true);
+        }
+    }
+
+    public void prettyPrint() {
+        printHelper(this.root, "", true);
     }
 
     // Driver Code
@@ -110,5 +134,8 @@ public class BinarySearchTree {
 
         // print height of the tree
         System.out.println(tree.height());
+
+        // print the whole tree
+        tree.prettyPrint();
     }
 }

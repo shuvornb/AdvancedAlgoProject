@@ -171,17 +171,29 @@ public class RedBlackTree {
         printHelper(this.root, "", true);
     }
 
-    public static void main(String[] args) {
-        RedBlackTree bst = new RedBlackTree();
-        bst.insert(8);
-        bst.insert(18);
-        bst.insert(5);
-        bst.insert(15);
-        bst.insert(17);
-        bst.insert(25);
-        bst.insert(40);
-        bst.insert(80);
+    // This method mainly calls getHeightOfBST()
+    public int height(){
+        return getHeightOfBST(root);
+    }
 
-        bst.prettyPrint();
+    // A recursive utility function to get the height of BST
+    int getHeightOfBST(RBTNode node) {
+        if(node == null) return -1;
+        return Math.max(1 + getHeightOfBST(node.left), 1 + getHeightOfBST(node.right));
+    }
+
+    public static void main(String[] args) {
+        RedBlackTree tree = new RedBlackTree();
+        tree.insert(8);
+        tree.insert(18);
+        tree.insert(5);
+        tree.insert(15);
+        tree.insert(17);
+        tree.insert(25);
+        tree.insert(40);
+        tree.insert(80);
+
+        tree.prettyPrint();
+        System.out.println("Height of the tree: " + tree.height());
     }
 }
