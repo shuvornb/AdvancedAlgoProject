@@ -1,10 +1,25 @@
-package sorting;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Util {
+public class SortingUtil {
+    public static void generateInput (int noOfInstances, int noOfIntegersPerInstance, String fileName) throws IOException {
+        final long MAX_VALUE = 4294967296L;
+        final long MIN_VALUE = 0L;
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+        for(int i=0; i<noOfInstances ;i++) {
+            StringBuilder sb = new StringBuilder();
+            for(int j=0; j<noOfIntegersPerInstance; j++) {
+                long generatedLong = MIN_VALUE + (long) (Math.random() * (MAX_VALUE - MIN_VALUE));
+                sb.append(generatedLong);
+                if(j < noOfIntegersPerInstance - 1) sb.append(" ");
+            }
+            if(i < noOfInstances-1) sb.append("\n");
+            writer.write(sb.toString());
+        }
+        writer.close();
+    }
+
     public static void generateOutput(String fileName, String sortingAlgo) throws IOException {
         File file = new File(fileName);
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -45,6 +60,9 @@ public class Util {
             String result = "Instance: " + counter + " Start: " + startTime + " End: " + endTime + " Interval: " + interval + "\n";
             writer.write(result);
 
+            for (long j : array) writer.write(j + " ");
+            writer.write("\n\n");
+
             counter ++;
             intervalSum += interval;
             intervalList.add((double) interval);
@@ -81,26 +99,9 @@ public class Util {
         return Math.sqrt(standardDeviation/length);
     }
 
-    public static void printArray(int[] arr) {
-        for (int j : arr) System.out.print(j + " ");
+    public static void printArray(long[] arr) {
+        for (long j : arr) System.out.print(j + " ");
         System.out.println();
-    }
-
-    public static void generateInput (int noOfInstances, int noOfIntegersPerInstance, String fileName) throws IOException {
-        final long MAX_VALUE = 4294967296L;
-        final long MIN_VALUE = 0L;
-        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-        for(int i=0; i<noOfInstances ;i++) {
-            StringBuilder sb = new StringBuilder();
-            for(int j=0; j<noOfIntegersPerInstance; j++) {
-                long generatedLong = MIN_VALUE + (long) (Math.random() * (MAX_VALUE - MIN_VALUE));
-                sb.append(generatedLong);
-                if(j < noOfIntegersPerInstance - 1) sb.append(" ");
-            }
-            if(i < noOfInstances-1) sb.append("\n");
-            writer.write(sb.toString());
-        }
-        writer.close();
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,5 +1,3 @@
-package trees.rbt;
-
 public class RBTNode {
     int key;
     RBTNode parent;

@@ -1,5 +1,3 @@
-package sorting;
-
 import java.io.*;
 
 public class InsertionSort {
@@ -17,9 +15,8 @@ public class InsertionSort {
         }
     }
 
-    // Driver code
     public static void main(String[] args) throws IOException {
         String fileName = args[0];
-        Util.generateOutput(fileName, "InsertionSort");
+        SortingUtil.generateOutput(fileName, "InsertionSort");
     }
 }

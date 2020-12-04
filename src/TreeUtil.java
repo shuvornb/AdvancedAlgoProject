@@ -1,8 +1,3 @@
-package trees;
-
-import trees.bst.BinarySearchTree;
-import trees.rbt.RedBlackTree;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Util {
+public class TreeUtil {
     public static void insertBulkNodes() throws IOException {
         BinarySearchTree bst = new BinarySearchTree();
         RedBlackTree rbt = new RedBlackTree();

@@ -1,5 +1,3 @@
-package trees.bst;
-
 public class BSTNode {
     int key;
     BSTNode left;
