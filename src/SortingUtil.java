@@ -105,6 +105,6 @@ public class SortingUtil {
     }
 
     public static void main(String[] args) throws IOException {
-        generateInput(5, 5, "input5.txt");
+        generateInput(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
     }
 }
